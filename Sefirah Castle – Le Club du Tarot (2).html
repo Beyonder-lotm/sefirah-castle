@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sefirah Castle – Le Club du Tarot</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#e9e6f2;--mute:#8d8aa3;--bg:#06070d;--glass:#ffffff09;--line:#ffffff18;--blood:#c8203c;--gold:#e8c06a;--gold2:#fbe6b0;--fog:#9b9fb5;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);background:var(--bg);font:400 15px/1.55 Sora,system-ui,sans-serif;overflow-x:hidden}
+#bg{position:fixed;inset:0;z-index:-3}#bg svg{width:100%;height:100%}
+#fan{position:absolute;inset:0;background:center/cover;opacity:.5}
+.fog{position:fixed;inset:-25%;z-index:-2;pointer-events:none;background:radial-gradient(35% 22% at 25% 35%,#8a8fa844,transparent 70%),radial-gradient(40% 25% at 78% 55%,#7a7f9840,transparent 70%),radial-gradient(55% 25% at 50% 92%,#9a9fb83a,transparent 70%);animation:drift 38s ease-in-out infinite alternate}
+.fog.b{animation-duration:55s;animation-direction:alternate-reverse;opacity:.7;filter:blur(20px)}
+@keyframes drift{to{transform:translate(7%,3%) scale(1.15)}}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(120% 90% at 50% 30%,transparent 30%,#04050bdd 100%)}
+.wrap{max-width:1100px;margin:0 auto;padding:10px 16px 90px}
+header{text-align:center;padding:34px 0 4px}
+.sig{display:inline-flex;width:54px;height:54px;border-radius:50%;align-items:center;justify-content:center;border:1px solid #e8c06a88;font:900 22px Cinzel,serif;color:var(--gold);box-shadow:0 0 40px #c8203c66,inset 0 0 18px #e8c06a33;background:radial-gradient(circle,#c8203c33,transparent 70%)}
+h1{margin:14px 0 0;font:900 clamp(30px,7.4vw,66px)/1.05 Cinzel,serif;letter-spacing:.16em;background:linear-gradient(180deg,#fff 10%,var(--gold) 55%,#b8862e);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 30px #c8203c55)}
+.sub{font:italic 500 clamp(16px,3.6vw,21px) 'Cormorant Garamond',serif;color:var(--fog);margin:10px 0 0;letter-spacing:.04em}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:7px;justify-content:center;align-items:center;flex-wrap:wrap;margin:22px auto 0;padding:10px;max-width:fit-content;border-radius:22px;background:#0b0c16aa;border:1px solid var(--line);backdrop-filter:blur(16px)}
+button{font:inherit;cursor:pointer;color:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+nav button{font:600 13px Sora,sans-serif;color:var(--mute);background:transparent;border:1px solid transparent;padding:8px 15px;border-radius:999px;transition:.2s}
+nav button:hover{color:var(--ink)}
+nav button[aria-pressed=true]{color:#1a0c04;background:linear-gradient(120deg,var(--gold2),var(--gold));box-shadow:0 4px 20px #e8c06a44}
+.pound{font:700 13px Cinzel,serif;color:var(--gold);background:#e8c06a14;border:1px solid #e8c06a44;padding:7px 14px;border-radius:999px}
+#pseudo{width:120px}
+#mst{flex-basis:100%;text-align:center;color:var(--gold);min-height:18px;font-size:12px}
+select,input[type=number],#pseudo{font:400 13px Sora,sans-serif;color:var(--ink);background:#ffffff0d;border:1px solid var(--line);padding:7px 11px;border-radius:10px;max-width:100%}
+#pseudo{border-radius:999px}
+select option{background:#12131f}
+.act{font:600 13px Sora,sans-serif;color:var(--ink);background:var(--glass);border:1px solid var(--line);padding:11px 22px;border-radius:12px;transition:.2s}
+.act:hover:not(:disabled){border-color:#ffffff55;transform:translateY(-1px)}
+.act:disabled{opacity:.45;cursor:default}
+.act.big{font:700 15px Cinzel,serif;letter-spacing:.08em;padding:16px 38px;border:0;border-radius:14px;color:#1a0c04;background:linear-gradient(120deg,var(--gold2),var(--gold) 55%,#d4783a);box-shadow:0 10px 38px #c8203c55;animation:glow 2.6s ease-in-out infinite alternate}
+.act.big:disabled{animation:none;background:#ffffff12;color:var(--mute);box-shadow:none;opacity:1}
+@keyframes glow{to{box-shadow:0 10px 56px #c8203caa}}
+#draw{text-align:center}
+#hint{min-height:28px;color:var(--fog);margin-top:30px;font:italic 500 19px 'Cormorant Garamond',serif}
+.row{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin:22px 0 30px;min-height:330px}
+.btns{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap}
+.card{width:204px;aspect-ratio:2/3;perspective:1100px;border:0;background:none;padding:0;position:relative;transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .15s ease-out}
+.row .card{animation:deal .75s cubic-bezier(.2,.8,.2,1) both}
+.row .card:nth-child(2){animation-delay:.12s}.row .card:nth-child(3){animation-delay:.24s}
+@keyframes deal{from{opacity:0;transform:translateY(80px) scale(.8) rotate(-7deg)}}
+.in{position:absolute;inset:0;transition:transform .9s cubic-bezier(.3,.7,.3,1);transform-style:preserve-3d}
+.card.up .in{transform:rotateY(180deg)}
+.face,.back{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.back{background:radial-gradient(circle at 50% 42%,#2b2e48,#090a15 72%);box-shadow:inset 0 0 0 1px #e8c06a66,inset 0 0 0 7px #090a15,inset 0 0 0 8px #e8c06a44,0 18px 44px #000b;display:flex;align-items:center;justify-content:center}
+.back::before{content:"";position:absolute;width:66%;aspect-ratio:1;border-radius:50%;background:conic-gradient(#e8c06a00,var(--gold),var(--blood),#e8c06a00 62%);-webkit-mask:radial-gradient(circle,transparent 62%,#000 63% 66%,transparent 67%);mask:radial-gradient(circle,transparent 62%,#000 63% 66%,transparent 67%);animation:spin 9s linear infinite}
+.back::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,#ffffff06 0 2px,transparent 2px 14px)}
+.back b{position:relative;z-index:1;font:900 54px Cinzel,serif;background:linear-gradient(#fff,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 16px #e8c06a88)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.face{transform:rotateY(180deg);background:#080911;box-shadow:inset 0 0 0 1.5px var(--rc),inset 0 0 0 6px #080911,inset 0 0 0 7px color-mix(in srgb,var(--rc) 55%,transparent),0 18px 44px #000c}
+.face::before{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;background:linear-gradient(115deg,#0000 40%,#ffffff2a 50%,#0000 60%);transform:translateX(-120%)}
+.card[data-r=l] .face::before,.card[data-r=m] .face::before{animation:sweep 3.4s ease-in-out infinite}
+@keyframes sweep{to{transform:translateX(120%)}}
+.arch{position:absolute;inset:9px 9px 62px;border-radius:90px 90px 8px 8px;overflow:hidden;background:radial-gradient(circle at 50% 36%,var(--rg),#07080f 88%) center/cover;box-shadow:0 0 0 1px color-mix(in srgb,var(--rc) 70%,transparent)}
+.arch svg{width:100%;height:100%;display:block}
+.arch::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0000 55%,#07080fcc 100%)}
+.num{position:absolute;top:14px;left:0;right:0;text-align:center;z-index:2;font:700 10px Cinzel,serif;color:#fff;opacity:.85;letter-spacing:.3em;text-shadow:0 1px 8px #000}
+.plate{position:absolute;left:9px;right:9px;bottom:9px;height:56px;z-index:2;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border-radius:6px 6px 10px 10px;background:linear-gradient(#0d0e1a,#06070d);border:1px solid color-mix(in srgb,var(--rc) 60%,transparent);padding:0 6px}
+.nm{font:700 12.5px/1.1 Cinzel,serif;color:#fff;letter-spacing:.03em}
+.ds{font:italic 500 11.5px 'Cormorant Garamond',serif;color:#c9c7dc;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.seq{position:absolute;top:30px;left:50%;transform:translateX(-50%);z-index:2;font:700 8.5px Sora,sans-serif;letter-spacing:.06em;color:#0a0a12;background:var(--rc);padding:2px 10px;border-radius:999px;white-space:nowrap;max-width:88%;overflow:hidden;text-overflow:ellipsis}
+.face.new::after{content:"Nouvelle";position:absolute;top:60px;right:14px;z-index:5;background:var(--blood);color:#fff;font:700 9px Sora,sans-serif;padding:2px 8px;border-radius:999px;box-shadow:0 0 14px #c8203c}
+.shine{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .2s;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),#ffffff44,#fff0 42%)}
+.card:hover .shine{opacity:1}
+.card[data-r=e] .shine,.card[data-r=l] .shine,.card[data-r=m] .shine{background:radial-gradient(circle at var(--mx,50%) var(--my,50%),#ffffff3a,#fff0 40%),linear-gradient(115deg,#0000 18%,#ff3dd248 33%,#3dffe848 50%,#ffe03d48 66%,#0000 82%);background-size:100% 100%,260% 260%;background-position:0 0,var(--mx,50%) var(--my,50%);mix-blend-mode:screen}
+.card[data-r=l] .face{box-shadow:inset 0 0 0 1.5px var(--rc),inset 0 0 0 6px #080911,inset 0 0 0 7px #e0ac4588,0 0 34px #e8c06a44,0 18px 44px #000c}
+.card[data-r=m] .face{animation:aura 3s ease-in-out infinite alternate}
+@keyframes aura{from{box-shadow:inset 0 0 0 1.5px var(--rc),inset 0 0 0 6px #080911,0 0 24px #c8203c66}to{box-shadow:inset 0 0 0 1.5px var(--rc),inset 0 0 0 6px #080911,0 0 60px #c8203ccc}}
+.card.glow.up{animation:pop 1.2s ease-out}
+@keyframes pop{0%{filter:brightness(2.8) saturate(1.6)}100%{filter:none}}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:20px;margin-top:22px}
+.grid .card{width:100%}.grid .in{transform:rotateY(180deg)}.grid .card:hover{z-index:2}
+.empty{position:absolute;inset:0;border:1px dashed #ffffff22;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--mute);font-size:11px;background:#ffffff05;text-align:center}
+.empty b{font:700 22px Cinzel,serif;color:#ffffff2a}
+.qty{position:absolute;top:-8px;left:-8px;z-index:6;background:linear-gradient(120deg,var(--gold2),var(--gold));color:#1a0c04;border-radius:999px;padding:1px 10px;font:700 12px Sora,sans-serif}
+.stat{display:flex;align-items:center;gap:16px;justify-content:center;font:700 18px Cinzel,serif;margin-top:26px}
+.bar{flex:0 1 320px;height:7px;background:#ffffff12;border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--gold),var(--blood))}
+.filters{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.filters button{font:600 11.5px Sora,sans-serif;color:var(--mute);background:var(--glass);border:1px solid var(--line);padding:5px 13px;border-radius:999px}
+.filters button[aria-pressed=true]{color:var(--gold);border-color:#e8c06a88;background:#e8c06a12}
+.panel{background:var(--glass);border:1px solid var(--line);border-radius:18px;backdrop-filter:blur(14px);padding:18px 20px;margin:18px 0}
+.panel>b{font:700 16px Cinzel,serif;color:var(--gold2);letter-spacing:.06em}
+.lot{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;border-left:3px solid var(--rc);background:#ffffff07;border-radius:10px;padding:8px 14px;margin:8px 0;font-size:13px}
+.lot i{color:var(--mute);font-size:11px;font-style:normal}
+.lot button{font:600 12px Sora,sans-serif;background:#e8c06a16;border:1px solid #e8c06a66;padding:5px 12px;border-radius:8px;color:var(--gold)}
+.mute{color:var(--mute)}.hide{display:none}
+.foot{text-align:center;margin-top:44px}
+.foot button.act{margin-bottom:12px}
+.foot button:not(.act){background:none;border:0;color:var(--mute);text-decoration:underline;font-size:12px}
+dialog{background:#0e0f1a;border:1px solid var(--line);border-radius:20px;color:var(--ink);padding:24px;text-align:center;max-width:94vw}
+dialog::backdrop{background:#000d;backdrop-filter:blur(6px)}
+dialog .card{width:min(290px,70vw);margin:0 auto 20px;cursor:default}
+.ds.s{font:600 8.5px Sora,sans-serif;letter-spacing:.02em;color:#d9d6ea;font-style:normal}.lv{position:absolute;top:9px;right:13px;z-index:3;font:700 9px Sora,sans-serif;color:var(--gold);text-shadow:0 0 6px #000}#ddet{max-width:300px;margin:0 auto 16px;font-size:13px}#ddet p{margin:6px 0}#pity b{color:var(--gold)}
+.fx{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;pointer-events:none;background:radial-gradient(circle,#e0ac4577,#000c 70%);animation:fxo 1.7s ease-out forwards}.fx.m{background:radial-gradient(circle,#d0334acc,#000e 70%);animation-duration:2.3s}.fx i{position:absolute;width:140vmax;height:140vmax;border-radius:50%;background:repeating-conic-gradient(#ffe0a133 0 6deg,transparent 6deg 20deg);-webkit-mask:radial-gradient(circle,#000,transparent 60%);mask:radial-gradient(circle,#000,transparent 60%);animation:fxr 2.3s linear}.fx.m i{background:repeating-conic-gradient(#ff3d5a44 0 6deg,transparent 6deg 20deg)}.fx span{position:relative;font:900 clamp(26px,8vw,64px) Cinzel,serif;letter-spacing:.2em;color:var(--gold2);text-shadow:0 0 40px #e0ac45;animation:fxs 1.2s cubic-bezier(.2,1.4,.3,1)}.fx.m span{color:#ffd0d6;text-shadow:0 0 50px #d0334a}@keyframes fxo{0%{opacity:0}12%{opacity:1}75%{opacity:1}100%{opacity:0}}@keyframes fxr{to{transform:rotate(90deg)}}@keyframes fxs{from{transform:scale(.3);opacity:0;letter-spacing:.6em}}
+.row.multi{min-height:0;gap:12px}.multi .card{width:112px}.multi .nm{font-size:9px}.multi .ds.s{font-size:7px}.multi .plate{height:44px}.multi .arch{bottom:48px}.row.moon1 .back{box-shadow:inset 0 0 0 1px #e8c06a,0 0 36px #e8c06a77}.row.moon2 .back{box-shadow:inset 0 0 0 1px #ff3d5a,0 0 44px #d0334acc}.bm{font-family:Cinzel,serif;color:#ff6b83;text-shadow:0 0 18px #d0334a}.bf{font-family:Cinzel,serif;color:var(--gold2);text-shadow:0 0 18px #e0ac45}
+.arena{display:flex;align-items:flex-start;justify-content:center;gap:12px;margin:18px 0}.side{display:flex;flex-direction:column;align-items:center;gap:8px;width:min(150px,38vw)}.arena .card{width:min(140px,36vw)}.arena .fcard{animation:enter .5s cubic-bezier(.2,.8,.2,1)}@keyframes enter{from{opacity:0;transform:translateY(40px) scale(.8)}}.vs{font:900 22px Cinzel,serif;color:var(--blood);text-shadow:0 0 20px #c8203c;align-self:center}.hb{width:100%;height:8px;background:#ffffff14;border-radius:99px;overflow:hidden}.hb i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#d0334a,#e8c06a);transition:width .35s}.hv{font:600 11px Sora,sans-serif;color:var(--mute)}.tm{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;min-height:22px}.pp{font:600 9px Sora,sans-serif;padding:2px 7px;border-radius:99px;background:#ffffff0d;color:var(--mute)}.pp.on{color:var(--gold);outline:1px solid #e8c06a88}.pp.dead{text-decoration:line-through;opacity:.4}.fc{position:relative;min-height:min(210px,54vw)}.fl{position:absolute;left:50%;top:30%;z-index:9;font:900 24px Cinzel,serif;pointer-events:none;white-space:nowrap;animation:fl .9s ease-out forwards;text-shadow:0 2px 10px #000}.fl.ht{color:#ff5470}.fl.hl{color:#6ff0a0}.fl.ms{color:#cfd3ff;font-size:17px}.fl.cr{color:#ffd45c;font-size:30px}@keyframes fl{from{transform:translate(-50%,0) scale(.6)}to{transform:translate(-50%,-70px) scale(1.2);opacity:0}}.fres{text-align:center;font:900 clamp(28px,7vw,52px) Cinzel,serif;letter-spacing:.2em;animation:fxs 1s}.fres.w{color:var(--gold2);text-shadow:0 0 36px #e8c06a}.fres.l{color:#ff6b83;text-shadow:0 0 36px #d0334a}
+@media (max-width:560px){.card{width:152px}.row{gap:12px;min-height:240px}.grid{gap:14px}.nm{font-size:10.5px}.plate{height:48px}.arch{bottom:54px}}
+@media (prefers-reduced-motion:reduce){.fog,.act.big,.back::before,.card[data-r=m] .face,.row .card,.card.glow.up{animation:none}.in{transition:none}}
+</style>
+</head>
+<body>
+<div id="bg" aria-hidden="true"><svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMax slice">
+<defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#07080e"/><stop offset=".6" stop-color="#191b28"/><stop offset="1" stop-color="#383b4a"/></linearGradient><radialGradient id="mn"><stop offset="0" stop-color="#d0334a"/><stop offset=".55" stop-color="#8a1a2b"/><stop offset="1" stop-color="#8a1a2b00"/></radialGradient></defs>
+<rect width="1000" height="600" fill="url(#sk)"/>
+<g fill="#e6dcc3" opacity=".55"><circle cx="90" cy="60" r="1.4"/><circle cx="240" cy="120" r="1"/><circle cx="430" cy="50" r="1.3"/><circle cx="560" cy="140" r="1"/><circle cx="670" cy="70" r="1.5"/><circle cx="900" cy="230" r="1"/><circle cx="150" cy="230" r="1.2"/><circle cx="350" cy="190" r="1"/></g>
+<circle cx="780" cy="170" r="190" fill="url(#mn)" opacity=".6"/><circle cx="780" cy="170" r="58" fill="#b32239"/>
+<g fill="none" stroke="#e8c06a" opacity=".13"><circle cx="190" cy="220" r="130" stroke-dasharray="10 6" stroke-width="12"/><circle cx="190" cy="220" r="76" stroke-width="1.5"/></g>
+<path fill="#06070c" d="M0 600V470l40-8v-40l10-16 10 16v36h30v-60l12-24 12 24v70h40v-30h24v-70l16-30 16 30v100h46v-50l20-60 20 60v50h40V450h30v-40l14-30 14 30v70h60v-90l18-40 18 40v90h50v-40h30v-80l10-20 10 20v80h38v-50l16-36 16 36v50h60v-60h26v-90l8-24 8 24v90h26v50h50v-70l14-34 14 34v70h60v-40l24-6 24 6v60z"/>
+<g fill="#ffc861"><circle cx="110" cy="452" r="2"/><circle cx="470" cy="440" r="2"/><circle cx="640" cy="446" r="2"/><circle cx="880" cy="452" r="2"/></g>
+</svg><div id="fan"></div></div>
+<div class="fog"></div><div class="fog b"></div>
+<div class="wrap">
+<header>
+  <span class="sig" aria-hidden="true">0</span>
+  <h1>SEFIRAH CASTLE</h1>
+  <p class="sub">Prie le Fou, et que la brume grise t’accorde ses cartes.</p>
+  <nav aria-label="Navigation">
+    <button id="tDraw" aria-pressed="true">Le Tirage</button>
+    <button id="tCol" aria-pressed="false">Le Grimoire</button>
+    <button id="tMk" aria-pressed="false">Le Marché</button>
+    <button id="tFt" aria-pressed="false">Le Combat</button>
+    <button id="tRk" aria-pressed="false">Classements</button><button id="tIx" aria-pressed="false">Index</button>
+    <span class="pound" id="pd">0 £</span>
+    <input id="pseudo" placeholder="Ton pseudo" maxlength="20" aria-label="Pseudo">
+    <button id="bgb">Mon fond</button><input type="file" id="bgf" accept="image/*" hidden>
+    <span id="mst" aria-live="polite"></span>
+  </nav>
+</header>
+
+<section id="draw">
+  <p id="hint">Trois cartes attendent dans la brume.</p>
+  <div class="row" id="pack"></div>
+  <div class="btns"><button class="act big" id="open">Prier le Fou ×1</button><button class="act" id="o5">×5</button><button class="act" id="o10">×10</button><button class="act" id="buy">Offrir un tribut (15 £)</button><button class="act" id="all" style="display:none">Tout révéler</button></div><p id="stk" class="mute" style="margin-top:20px"></p><p id="pity" class="mute"></p><p class="btns"><button class="act" id="dbtn"></button></p>
+</section>
+
+<section id="col" class="hide">
+  <div class="stat"><span id="count"></span><div class="bar"><i id="fill" style="width:0"></i></div></div>
+  <div class="filters" id="fk"></div>
+  <div class="filters" id="fr"></div>
+  <div class="grid" id="grid"></div>
+  <div class="foot"><p class="btns"><button class="act" id="sell">Vendre les doublons inutiles</button></p><button id="reset">Effacer ma collection</button></div>
+</section>
+<section id="mk" class="hide"><div id="mkw"></div></section>
+<section id="ft" class="hide"><div id="ftw"></div></section>
+<section id="rk" class="hide"><div id="rkw"></div></section><section id="ix" class="hide"><div id="ixw"></div></section>
+</div>
+
+<dialog id="dlg"><div id="dcard"></div><div id="ddet"></div>
+<div class="btns"><button class="act" id="dlv">Améliorer</button><button class="act" id="dup">Ajouter mon image</button><button class="act" id="drm">Retirer l’image</button><button class="act" id="dcl">Fermer</button></div>
+<input type="file" id="file" accept="image/*" hidden></dialog>
+
+<script>
+const R={c:{n:"Séquence 9-8",c:"#a4a49c",g:"#363845",w:55,v:1},r:{n:"Séquence 7-6",c:"#5aa9b5",g:"#1d4752",w:28,v:3},e:{n:"Séquence 5-4",c:"#a876d6",g:"#432460",w:12,v:8},l:{n:"Séquence 3-1",c:"#e0ac45",g:"#6e4a0e",w:4.5,v:25},m:{n:"Séquence 0",c:"#d0334a",g:"#681020",w:.5,v:100}};
+const K={all:"Toutes",k:"Voie du Fou",p:"Personnages",d:"Divinités",l:"Lieux"};
+const CARDS=[
+["Klein — Voyant","Voie du Fou","Séq. 9 · Voyant","c","k","hair","none"],
+["Klein — Clown","Voie du Fou","Séq. 8 · Clown","c","k","top","nose"],
+["Klein — Magicien","Voie du Fou","Séq. 7 · Magicien","r","k","top","cane"],
+["Klein — Sans-Visage","Voie du Fou","Séq. 6 · Sans-Visage","r","k","hood","mask"],
+["Klein — Marionnettiste","Voie du Fou","Séq. 5 · Marionnettiste","e","k","top","strings"],
+["Klein — Sorcier Bizarre","Voie du Fou","Séq. 4 · Sorcier Bizarre","e","k","hood","stars"],
+["Klein — Érudit d’Antan","Voie du Fou","Séq. 3 · Érudit d’Antan","l","k","top","monocle"],
+["Klein — Invocateur de Miracles","Voie du Fou","Séq. 2 · Invocateur","l","k","halo","gear"],
+["Klein — Serviteur des Mystères","Voie du Fou","Séq. 1 · Serviteur","l","k","halo","eye"],
+["Le Fou","Au-dessus de la brume grise","Séq. 0 · Le Fou","m","k","crown","eye"],
+["Benson Moretti","Frère aîné de Klein","Famille Moretti","c","p","hair","none"],
+["Melissa Moretti","Sœur cadette de Klein","Famille Moretti","c","p","hair","none"],
+["Dunn Smith","Capitaine des Gardiens de Nuit","Gardien de Nuit","c","p","cap","none"],
+["Old Neil","Gardien de Nuit vétéran","Gardien de Nuit","c","p","cap","monocle"],
+["Daly Simone","Gardienne de Nuit","Gardien de Nuit","c","p","cap","none"],
+["Leonard Mitchell","Poète, Gardien de Nuit","Gardien de Nuit","r","p","hair","stars"],
+["Fors Wall","Le Magicien du Tarot Club","Le Magicien","r","p","hair","cane"],
+["Emlyn White","La Lune","La Lune","r","p","hood","moon"],
+["Derrick Berg","Le Soleil","Le Soleil","r","p","hair","sun"],
+["Audrey Hall","La Justice","La Justice","e","p","hair","scales"],
+["Alger Wilson","Le Pendu","Le Pendu","e","p","cap","anchor"],
+["Zhou Mingrui","Voyageur venu de la Terre","Avant Klein","e","p","hair","gear"],
+["Roselle Gustav","L’Empereur Noir","L’Empereur Noir","e","p","crown","none"],
+["Amon","Voie de l’Erreur","Voie de l’Erreur","l","p","bowler","none"],
+["Monsieur la Porte","Voie de la Porte","Voie de la Porte","l","p","bowler","door"],
+["Adam","Ancien Seigneur","Ancien Seigneur","l","p","halo","none"],
+["Déesse de la Nuit Éternelle","Église de la Nuit Éternelle","Divinité","l","d","hood","moon"],
+["Seigneur des Tempêtes","Église du Seigneur des Tempêtes","Divinité","l","d","crown","bolt"],
+["Dieu de la Vapeur et des Machines","Église de la Vapeur","Divinité","l","d","bowler","gear"],
+["Le Créateur Originel","Seigneur du Chaos","Divinité","m","d","horns","eye"],
+["Tingen","Ville du Royaume de Loen","Lieu","r","l","","city"],
+["Backlund","Capitale du Royaume de Loen","Lieu","r","l","","city"],
+["Le Club du Tarot","La longue table de bronze","Lieu","e","l","","table"],
+["Au-dessus de la brume grise","Le palais du Fou","Lieu","e","l","","palace"]
+];
+const BS={c:[12,6,60],r:[20,10,95],e:[32,16,140],l:[48,24,210],m:[75,38,320]};
+const AB={dodge:["Illusion","+22 % d’esquive"],crit:["Œil du Voyant","+20 % de coups critiques"],shield:["Tromperie","Annule la première attaque reçue"],regen:["Régénération","Récupère 7 % des PV chaque tour"],pierce:["Fil invisible","Ignore 60 % de la DEF adverse"],rage:["Fureur","+40 % ATQ sous 50 % de PV"],thorns:["Représailles","Renvoie 25 % des dégâts reçus"],drain:["Siphon spirituel","Se soigne de 30 % des dégâts infligés"],aura:["Soutien du Club","+10 % ATQ à toute l’équipe"],fort:["Rempart","+25 % DEF"]};
+const SK=["crit,0,-5,0","dodge,5,-5,0","crit,10,-10,0","dodge,0,0,5","pierce,10,0,0","drain,10,-5,0","pierce,5,5,5","shield,10,5,5","regen,10,5,10","shield,10,10,10","fort,0,10,5","regen,-5,0,5","fort,0,15,10","thorns,0,5,5","crit,5,0,0","crit,15,-10,-10","aura,-10,-5,0","drain,0,0,5","rage,10,0,5","aura,-10,0,5","thorns,0,5,5","pierce,5,0,0","pierce,15,-5,0","dodge,10,-5,0","shield,0,5,5","rage,10,5,10","regen,0,5,10","crit,15,0,5","fort,5,15,5","rage,15,10,10","","","",""];
+const LB={30:["hp",8],31:["atk",6],32:["def",8],33:["all",5]},LBT={30:"Équipe : +8 % PV",31:"Équipe : +6 % ATQ",32:"Équipe : +8 % DEF",33:"Équipe : +5 % à tout"};
+const AF={k:"d",d:"p",p:"k"},AFT={k:"Divinités",d:"Personnages",p:"Voie du Fou"};
+const TIT=["Séq. 9 · Voyant","Séq. 8 · Clown","Séq. 7 · Magicien","Séq. 6 · Sans-Visage","Séq. 5 · Marionnettiste","Séq. 4 · Sorcier Bizarre","Séq. 3 · Érudit d’Antan","Séq. 2 · Invocateur","Séq. 1 · Serviteur","Séq. 0 · Le Fou"],TH=[0,40,100,200,350,550,800,1100,1500,2000];
+const tit=p=>{let k=0;TH.forEach((t,j)=>{if(p>=t)k=j});return TIT[k]};
+const LV=i=>(S.lv&&S.lv[i])||1;
+function st(i,lm){const c=CARDS[i];if(c[4]==="l")return null;const b=BS[c[3]],[ab,x,y,z]=SK[i].split(","),m=1+.1*(((lm||S.lv||{})[i]||1)-1);return{ab,a:Math.round(b[0]*(1+x/100)*m),d:Math.round(b[1]*(1+y/100)*m),p:Math.round(b[2]*(1+z/100)*m)}}
+function stl(i){const s=st(i);return s?`ATQ ${s.a} · DEF ${s.d} · PV ${s.p}`:LBT[i]}
+const pwr=i=>{const s=st(i);return s?Math.round(s.a+s.d+s.p/4):0};
+const dayN=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
+function draw3(){const a=[pick(),pick(),pick()];S.pity=(S.pity||0)+1;if(a.some(i=>"elm".includes(CARDS[i][3])))S.pity=0;else if(S.pity>=7){const p=[];CARDS.forEach((c,i)=>{if(c[3]===(Math.random()<.8?"e":"l"))p.push(i)});a[2]=p[Math.floor(Math.random()*p.length)];S.pity=0}return a}
+function ms(){const n=cnt(),T=[[9,20],[17,40],[26,80],[34,300]];T.forEach(([k,g],j)=>{if(n>=k&&!((S.ms||0)&(1<<j))){S.ms=(S.ms||0)|(1<<j);S.gold+=g;msg(`Palier de ${k} cartes : +${g} £ !`)}})}
+function ui(){const p=$("pity");if(!p)return;p.innerHTML=`Pitié du Fou : <b>${S.pity||0}/7</b> · un arcane Séq. 5 ou mieux est garanti après 7 prières sans chance`;const td=dayN(),can=S.dd!==td,nx=S.dd===td-1?(S.ds||0)+1:1,b=$("dbtn");b.disabled=!can;b.textContent=can?`Offrande du jour : +${10+Math.min(nx,7)*5+(nx%7===0?30:0)} £ (jour ${nx})`:`Offrande déposée · série de ${S.ds||0} j`}
+const KEY="grimoire-du-fou-v1",IK="grimoire-du-fou-img",CD=12000;
+let S={own:{},last:0,gold:30,items:[],team:[],pts:0,w:0,l:0,lf:0,name:""},IM={};
+const $=id=>document.getElementById(id);
+try{const s=localStorage.getItem(KEY);if(s)S=Object.assign(S,JSON.parse(s))}catch(e){}
+try{const s=localStorage.getItem(IK);if(s)IM=JSON.parse(s)}catch(e){}
+function save(){ms();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}$("pd").textContent=S.gold+" £";ui();if(typeof afterSave==="function")afterSave()}
+function rom(n){let s="";[[30,"XXX"],[20,"XX"],[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]].forEach(([v,r])=>{while(n>=v){s+=r;n-=v}});return s}
+const A={
+monocle:c=>`<circle cx="58" cy="60" r="5.5" fill="none" stroke="${c}" stroke-width="1.2"/><path d="M58 66Q60 80 54 92" stroke="${c}" fill="none"/>`,
+nose:()=>`<circle cx="50" cy="67" r="3.6" fill="#d0334a"/>`,
+strings:c=>[20,35,65,80].map(x=>`<path d="M${x} 0L${x<50?x+8:x-8} 96" stroke="${c}" stroke-width=".7" opacity=".8"/>`).join(""),
+stars:c=>`<g fill="${c}"><circle cx="18" cy="30" r="1.6"/><circle cx="82" cy="24" r="1.2"/><circle cx="14" cy="64" r="1"/><circle cx="86" cy="58" r="1.6"/></g>`,
+eye:c=>`<ellipse cx="50" cy="48" rx="6" ry="3" fill="none" stroke="${c}" stroke-width="1.2"/><circle cx="50" cy="48" r="1.6" fill="${c}"/>`,
+gear:c=>`<circle cx="80" cy="106" r="11" fill="none" stroke="${c}" stroke-width="4" stroke-dasharray="3.5 2.5"/><circle cx="80" cy="106" r="5" fill="none" stroke="${c}"/>`,
+scales:c=>`<path d="M30 102H70M50 96V114M32 102L26 114H38ZM68 102L62 114H74Z" stroke="${c}" fill="none" stroke-width="1.2"/>`,
+anchor:c=>`<path d="M50 96v20M43 104h14M40 112q10 9 20 0" stroke="${c}" fill="none" stroke-width="1.5"/>`,
+sun:c=>`<circle cx="50" cy="26" r="7" fill="${c}"/><circle cx="50" cy="26" r="13" fill="none" stroke="${c}" stroke-dasharray="2 3"/>`,
+moon:c=>`<path d="M72 20A14 14 0 1 0 72 48A10 10 0 1 1 72 20Z" fill="${c}"/>`,
+cane:c=>`<path d="M82 92L88 128" stroke="${c}" stroke-width="2.5"/><circle cx="82" cy="91" r="3" fill="${c}"/>`,
+door:c=>`<rect x="64" y="84" width="22" height="40" fill="#0c0e15" stroke="${c}"/><circle cx="81" cy="104" r="1.6" fill="${c}"/>`,
+bolt:c=>`<path d="M84 76L72 102H80L72 124" stroke="${c}" fill="none" stroke-width="2"/>`,
+mask:()=>"",none:()=>""};
+function hat(h,c){return({
+top:`<rect x="35" y="22" width="30" height="28" fill="#0f111a" stroke="${c}"/><rect x="26" y="48" width="48" height="5" fill="#0f111a" stroke="${c}"/><rect x="35" y="40" width="30" height="4" fill="${c}"/>`,
+bowler:`<path d="M34 50Q34 28 50 28Q66 28 66 50Z" fill="#0f111a" stroke="${c}"/><rect x="28" y="48" width="44" height="4" fill="#0f111a" stroke="${c}"/>`,
+cap:`<path d="M33 50Q35 30 50 30Q65 30 67 50Z" fill="#0f111a" stroke="${c}"/><rect x="32" y="48" width="36" height="4" fill="${c}"/>`,
+crown:`<path d="M33 47L35 28L43 38L50 24L57 38L65 28L67 47Z" fill="${c}"/>`,
+halo:`<ellipse cx="50" cy="32" rx="22" ry="6" fill="none" stroke="${c}" stroke-width="2"/>`,
+horns:`<path d="M34 46Q22 36 28 18Q34 34 42 40ZM66 46Q78 36 72 18Q66 34 58 40Z" fill="${c}"/>`,
+hair:`<path d="M32 58Q30 34 50 33Q70 34 68 58Q60 44 50 44Q40 44 32 58Z" fill="#0b0d14" stroke="${c}" stroke-width=".8"/>`
+})[h]||""}
+const ring=c=>`<circle cx="50" cy="58" r="40" fill="none" stroke="${c}" stroke-width=".6" stroke-dasharray="1.5 3" opacity=".7"/><circle cx="50" cy="58" r="33" fill="none" stroke="${c}" stroke-width=".4" opacity=".5"/><circle cx="50" cy="15" r="5" fill="#b32239" opacity=".9"/>`;
+function scene(a,c,n){
+  let b="",h=0;for(let i=0;i<9;i++){h=40+((n.length*7+i*37)%46);b+=`<rect x="${i*11-2}" y="${130-h}" width="10" height="${h}" fill="#0b0d14" stroke="${c}" stroke-width=".6"/><path d="M${i*11-2} ${130-h}L${i*11+3} ${122-h}L${i*11+8} ${130-h}" fill="#0b0d14" stroke="${c}" stroke-width=".6"/><circle cx="${i*11+3}" cy="${136-h}" r="1" fill="#ffc861"/>`}
+  if(a==="table")b=`<ellipse cx="50" cy="92" rx="38" ry="12" fill="#8a5a22" stroke="${c}"/><ellipse cx="50" cy="90" rx="30" ry="8" fill="#a67232"/>`+[14,32,50,68,86].map(x=>`<circle cx="${x}" cy="${x%2?72:108}" r="5" fill="#0b0d14" stroke="${c}"/>`).join("");
+  if(a==="palace")b=`<path d="M14 130V70L24 54L34 70V94H66V70L76 54L86 70V130Z" fill="#0b0d14" stroke="${c}"/><rect x="42" y="38" width="16" height="60" fill="#0b0d14" stroke="${c}"/><path d="M42 38L50 20L58 38Z" fill="#0b0d14" stroke="${c}"/>`;
+  return `<circle cx="70" cy="34" r="11" fill="#b32239" opacity=".9"/><circle cx="70" cy="34" r="19" fill="#b32239" opacity=".2"/>${b}`}
+function art(i){
+  const [n,d,t,r,k,h,a]=CARDS[i],c=R[r].c;
+  if(IM[i])return null;
+  if(k==="l")return `<svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid slice">${scene(a,c,n)}</svg>`;
+  const f=a==="mask"?"":`<circle cx="43" cy="62" r="1.5" fill="${c}"/><circle cx="57" cy="62" r="1.5" fill="${c}"/>`;
+  const hood=h==="hood"?`<path d="M22 130Q16 30 50 24Q84 30 78 130Z" fill="#0f111a" stroke="${c}"/>`:"";
+  return `<svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid slice"><circle cx="50" cy="58" r="46" fill="${c}" opacity=".28"/>${ring(c)}${hood}<path d="M8 130Q10 96 50 92Q90 96 92 130Z" fill="#11131c" stroke="${c}"/><path d="M44 84h12v12H44Z" fill="#1a1d29"/><ellipse cx="50" cy="62" rx="17" ry="20" fill="${a==="mask"?"#c8c2b0":"#1a1d29"}" stroke="${c}"/>${f}${hat(h,c)}${(A[a]||A.none)(c)}<path d="M50 96L44 130M50 96L56 130" stroke="${c}" opacity=".6"/></svg>`}
+function el(i,o={}){
+  const [n,d,t,r]=CARDS[i],q=R[r];
+  const b=document.createElement("button");b.className="card"+(o.up?" up":"");b.dataset.r=r;
+  b.style.cssText=`--rc:${q.c};--rg:${q.g}`;
+  b.setAttribute("aria-label",o.up?`${n}, ${t}`:"Carte face cachée");
+  const s=art(i);
+  b.innerHTML=`<div class="in"><div class="back" aria-hidden="true"><b>0</b></div><div class="face${o.isNew?" new":""}"><div class="shine"></div><div class="num">${rom(i+1)}</div>${LV(i)>1?`<div class="lv">${"★".repeat(LV(i)-1)}</div>`:""}<div class="arch"${s?"":` style="background-image:url(${IM[i]})"`}>${s||""}</div><div class="seq">${t}</div><div class="plate"><div class="nm">${n}</div><div class="ds s">${stl(i)}</div></div></div></div>`;
+  return b;
+}
+function rarity(){let t=0;for(const k in R)t+=R[k].w;let x=Math.random()*t;for(const k in R){if((x-=R[k].w)<0)return k}return"c"}
+function pick(){const k=rarity(),p=[];CARDS.forEach((c,i)=>{if(c[3]===k)p.push(i)});return p[Math.floor(Math.random()*p.length)]}
+function renderPack(ids){
+  const p=$("pack");p.innerHTML="";let left=ids.length;$("all").style.display="";
+  ids.forEach(i=>{
+    const isNew=!S.own[i];S.own[i]=(S.own[i]||0)+1;
+    const c=el(i,{isNew});if(["l","m"].includes(CARDS[i][3]))c.classList.add("glow");
+    c.onclick=()=>{if(c.classList.contains("up"))return;c.classList.add("up");fx(CARDS[i][3]);if(--left===0){$("hint").textContent="Les cartes ont rejoint ton grimoire.";$("all").style.display="none"}};
+    p.appendChild(c);
+  });
+  $("hint").textContent="Touche une carte pour la retourner.";save();
+}
+function tick(){
+  const w=S.last+CD-Date.now(),b=$("open");
+  if(w>0){b.disabled=true;b.textContent=`La brume se reforme (${Math.ceil(w/1000)} s)`}else{b.disabled=false;b.textContent="Prier le Fou"}
+  $("buy").disabled=S.gold<15;
+}
+$("open").onclick=()=>{if(Date.now()<S.last+CD)return;S.last=Date.now();renderPack(draw3());tick()};
+$("buy").onclick=()=>{if(S.gold<15)return;S.gold-=15;renderPack(draw3());tick()};
+$("all").onclick=()=>document.querySelectorAll("#pack .card:not(.up)").forEach((c,j)=>setTimeout(()=>c.click(),j*250));
+let fk="all",fr="all";
+function chips(id,obj,cur,set){
+  const f=$(id);f.innerHTML="";
+  Object.keys(obj).forEach(k=>{const b=document.createElement("button");b.textContent=k==="all"?"Toutes":(obj[k].n||obj[k]);b.setAttribute("aria-pressed",cur===k);b.onclick=()=>{set(k);renderCol()};f.appendChild(b)});
+}
+function renderCol(){
+  const have=CARDS.filter((_,i)=>S.own[i]).length;
+  $("count").textContent=`${have} / ${CARDS.length}`;
+  $("fill").style.width=(have/CARDS.length*100)+"%";
+  chips("fk",K,fk,v=>fk=v);chips("fr",Object.assign({all:"Toutes"},R),fr,v=>fr=v);
+  const g=$("grid");g.innerHTML="";
+  CARDS.forEach((c,i)=>{
+    if((fk!=="all"&&c[4]!==fk)||(fr!=="all"&&c[3]!==fr))return;
+    if(S.own[i]){
+      const e=el(i,{up:true});e.onclick=()=>openDlg(i);
+      if(S.own[i]>1){const q=document.createElement("span");q.className="qty";q.textContent="×"+S.own[i];e.appendChild(q)}
+      g.appendChild(e);
+    }else{
+      const d=document.createElement("div");d.className="card";
+      d.innerHTML=`<div class="empty"><b>${rom(i+1)}</b>${R[c[3]].n}</div>`;g.appendChild(d);
+    }
+  });
+}
+$("sell").onclick=()=>{let t=0;for(const i in S.own){{const k=1+(LV(i)<5&&CARDS[i][4]!=="l"?LV(i):0),n=S.own[i]-k;if(n>0){t+=n*R[CARDS[i][3]].v;S.own[i]=k}}}if(!t){alert("Tu n’as aucun doublon à vendre.");return}S.gold+=t;save();renderCol();tick();alert(`Doublons vendus : +${t} £`)};
+let cur=0;
+function openDlg(i){cur=i;const d=$("dcard");d.innerHTML="";d.appendChild(el(i,{up:true}));
+const s=st(i),c=CARDS[i],l=LV(i),b=$("dlv");
+$("ddet").innerHTML=`<p class="mute">${c[1]}</p>`+(s?`<p><b>${AB[s.ab][0]}</b><br>${AB[s.ab][1]}</p><p class="mute">Niveau ${l}/5 · avantage sur : ${AFT[c[4]]}</p>`:`<p><b>${LBT[i]}</b></p>`);
+b.style.display=s?"":"none";if(s){b.disabled=l>=5||S.own[i]-1<l;b.textContent=l>=5?"Niveau max":`Améliorer (${l} doublon${l>1?"s":""})`}
+$("dlg").showModal()}
+$("dcl").onclick=()=>$("dlg").close();
+$("dup").onclick=()=>$("file").click();
+$("drm").onclick=()=>{delete IM[cur];try{localStorage.setItem(IK,JSON.stringify(IM))}catch(e){}openDlg(cur);renderCol()};
+$("file").onchange=e=>{
+  const f=e.target.files[0];if(!f)return;
+  const im=new Image();im.onload=()=>{
+    const c=document.createElement("canvas");c.width=300;c.height=400;const x=c.getContext("2d");
+    const s=Math.max(300/im.width,400/im.height),w=im.width*s,h=im.height*s;
+    x.drawImage(im,(300-w)/2,(400-h)/2,w,h);
+    IM[cur]=c.toDataURL("image/jpeg",.82);
+    try{localStorage.setItem(IK,JSON.stringify(IM))}catch(err){alert("Mémoire pleine : retire une image avant d’en ajouter.");delete IM[cur]}
+    openDlg(cur);renderCol();e.target.value="";
+  };
+  im.src=URL.createObjectURL(f);
+};
+$("reset").onclick=()=>{if(confirm("Effacer toute ta collection ?")){S={own:{},last:0,gold:30,items:[],team:[],pts:0,w:0,l:0,lf:0,name:S.name};save();$("pack").innerHTML="";renderCol();tick()}};
+for(let i=0;i<3;i++){const d=document.createElement("div");d.className="card";d.innerHTML='<div class="in"><div class="back"><b>0</b></div></div>';$("pack").appendChild(d)}
+// ===== Multijoueur, combat, classements =====
+R.c.p=20;R.r.p=45;R.e.p=70;R.l.p=90;R.m.p=99;
+let db=null,uid=null,PL=[],MK=[],RC={},BD=[],RD=0,busy=false,wt=0,curTab="draw",FL="";const settling={};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cnt=()=>CARDS.filter((_,i)=>S.own[i]).length;
+const nm=()=>S.name||("Voyageur-"+String(uid||"local").slice(-4));
+const pw=i=>R[CARDS[i][3]].p+(i*7%10);
+const msg=t=>{$("mst").textContent=t};
+const bestBid=id=>BD.filter(b=>b.lid===id).sort((a,b)=>b.amt-a.amt||a.t-b.t)[0];
+const clone=o=>JSON.parse(JSON.stringify(o));
+function afterSave(){if(!db)return;clearTimeout(wt);wt=setTimeout(flush,800)}
+async function flush(){
+  if(busy){wt=setTimeout(flush,800);return}busy=true;
+  try{await db.doc("players/"+uid).set({name:nm(),own:S.own,gold:S.gold,items:S.items,team:S.team,pts:S.pts,w:S.w,l:S.l,n:cnt(),last:S.last,lf:S.lf,lv:S.lv||{},loc:S.loc??-1,pity:S.pity||0,dd:S.dd||0,ds:S.ds||0,ws:S.ws||0,ms:S.ms||0,st:S.st===undefined?3:S.st,lt:S.lt||Date.now(),dm:S.dm||null,wm:S.wm||null,cm:S.cm||0,bn:S.bn||{a:0,d:0,p:0}})}
+  catch(e){msg("Synchronisation impossible pour le moment.")}
+  busy=false;
+}
+(async()=>{
+  try{
+    if(typeof claude==="undefined")throw 0;
+    const [u,d]=await Promise.all([claude.use("user"),claude.use("db")]);
+    if(!u||!d)throw 0;
+    uid=await u.id();if(!uid)throw 0;db=d;
+    const s=await db.doc("players/"+uid).get();
+    if(s.exists)Object.assign(S,clone(s.data()));
+    S.items=S.items||[];S.team=S.team||[];
+    save();$("pseudo").value=S.name||"";
+    db.collection("players").onSnapshot(q=>{
+      PL=q.docs.map(d=>Object.assign({id:d.id},d.data()));MK=[];
+      PL.forEach(p=>(p.items||[]).forEach(it=>MK.push(Object.assign({},it,{sid:p.id,sn:p.name}))));
+      settle();refresh()
+    },()=>msg("Les données partagées sont indisponibles."));
+    db.collection("receipts").onSnapshot(q=>{RC={};q.docs.forEach(d=>RC[d.id]=d.data());RD|=1;settle();refresh()});
+    db.collection("bids").onSnapshot(q=>{BD=q.docs.map(d=>d.data());RD|=2;settle();refresh()});
+    msg("Connecté en ligne.");
+  }catch(e){db=null}
+  refresh(true);
+})();
+function settle(){
+  if(!db||RD!==3)return;const now=Date.now();let ch=false;
+  S.items=S.items.filter(it=>{
+    const r=RC[it.id];
+    if(r){if(it.mode==="swap")S.own[it.want]=(S.own[it.want]||0)+1;else S.gold+=r.amt||0;msg("Vendu : "+CARDS[it.card][0]);ch=true;return false}
+    if(it.mode==="auction"&&(now>it.end+600000||(now>it.end&&!bestBid(it.id)))){S.own[it.card]=(S.own[it.card]||0)+1;msg("Enchère sans acheteur : carte rendue.");ch=true;return false}
+    return true;
+  });
+  if(ch)save();
+  MK.forEach(it=>{
+    if(it.mode!=="auction"||now<it.end||RC[it.id]||it.sid===uid||settling[it.id])return;
+    const b=bestBid(it.id);
+    if(b&&b.by===uid&&S.gold>=b.amt){settling[it.id]=1;pay(it,b.amt)}
+  });
+}
+async function pay(it,amt){
+  const ref=db.doc("receipts/"+it.id);
+  const r=await ref.get();if(r.exists){msg("Déjà vendu.");return}
+  await ref.set({by:uid,amt,seller:it.sid,card:it.card});
+  if(it.mode==="swap"){S.own[it.want]--;if(!S.own[it.want])delete S.own[it.want]}else S.gold-=amt;
+  S.own[it.card]=(S.own[it.card]||0)+1;save();msg("Acquis : "+CARDS[it.card][0]);
+}
+async function act(id){
+  const it=MK.find(x=>x.id===id);if(!it||it.sid===uid||RC[id])return;
+  if(it.mode==="fixed"){if(S.gold<it.price)return msg("Pas assez de livres.");await pay(it,it.price)}
+  else if(it.mode==="swap"){if(!(S.own[it.want]>0))return msg("Tu n’as pas la carte demandée.");await pay(it,0)}
+  else{
+    const v=parseInt($("i"+id).value),b=bestBid(id),min=b?b.amt+1:it.price;
+    if(!(v>=min))return msg("Offre minimale : "+min+" £.");
+    if(S.gold<v)return msg("Pas assez de livres.");
+    await db.doc("bids/"+id+"_"+uid).set({lid:id,by:uid,name:nm(),amt:v,t:Date.now()});msg("Offre enregistrée : "+v+" £.");
+  }
+  refresh(true);
+}
+function listIt(){
+  const c=+$("lc").value,mode=$("lm").value;if(!(S.own[c]>0))return msg("Choisis une carte que tu possèdes.");
+  const it={id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),card:c,mode};
+  if(mode==="swap")it.want=+$("lw").value;else it.price=Math.max(1,parseInt($("lp").value)||1);
+  if(mode==="auction")it.end=Date.now()+(+$("ld").value)*60000;
+  S.own[c]--;if(!S.own[c])delete S.own[c];S.items.push(it);save();msg("Carte mise en vente.");refresh(true);
+}
+function unlist(id){
+  const k=S.items.findIndex(x=>x.id===id);if(k<0)return;const it=S.items[k];
+  if(RC[id]||(it.mode==="auction"&&bestBid(id)))return msg("Trop tard : une offre existe déjà.");
+  S.own[it.card]=(S.own[it.card]||0)+1;S.items.splice(k,1);save();refresh(true);
+}
+function rMk(){
+  const el=$("mkw");
+  if(!db){el.innerHTML='<div class="panel">Le marché, les échanges et le classement en ligne demandent une connexion. Ouvre le lien partagé avec un accès Contributeur.</div>';return}
+  const owned=CARDS.map((c,i)=>S.own[i]?`<option value="${i}">${esc(c[0])} ×${S.own[i]}</option>`:"").join("");
+  const all=CARDS.map((c,i)=>`<option value="${i}">${esc(c[0])}</option>`).join("");
+  const now=Date.now();
+  let h=`<div class="panel"><b>Mettre en vente</b><p class="btns"><select id="lc" aria-label="Carte">${owned}</select><select id="lm" aria-label="Type"><option value="fixed">Prix fixe</option><option value="auction">Enchère</option><option value="swap">Échange</option></select><input id="lp" type="number" min="1" value="10" aria-label="Prix en livres"><select id="lw" aria-label="Carte demandée en échange">${all}</select><select id="ld" aria-label="Durée"><option value="2">2 min</option><option value="60">1 h</option><option value="1440">24 h</option></select><button class="act" id="lgo">Mettre en vente</button></p><p class="mute">Les gains d’une vente arrivent dès que tu rouvres la page.</p></div>`;
+  const rows=MK.filter(it=>!RC[it.id]).map(it=>{
+    const c=CARDS[it.card],mine=it.sid===uid;let info,a;
+    const rm=`<button data-u="${it.id}">Retirer</button>`;
+    if(it.mode==="fixed"){info=`${it.price} £`;a=mine?rm:`<button data-b="${it.id}">Acheter</button>`}
+    else if(it.mode==="swap"){info="contre "+esc(CARDS[it.want][0]);a=mine?rm:`<button data-b="${it.id}">Échanger</button>`}
+    else{const b=bestBid(it.id),left=it.end-now,min=b?b.amt+1:it.price;
+      info=`${b?b.amt:it.price} £${b?" ("+esc(b.name)+")":""} · ${left>0?Math.ceil(left/60000)+" min":"terminée"}`;
+      a=left<=0?"":mine?rm:`<input type="number" id="i${it.id}" min="${min}" value="${min}" aria-label="Ton offre"><button data-b="${it.id}">Enchérir</button>`}
+    return `<div class="lot" style="--rc:${R[c[3]].c}"><span><b>${esc(c[0])}</b> <i>${c[2]}</i></span><span>${esc(it.sn||"Voyageur")}${mine?" (toi)":""} · ${info}</span><span>${a}</span></div>`;
+  }).join("");
+  el.innerHTML=h+`<div class="panel"><b>Annonces</b>${rows||'<p class="mute">Aucune annonce pour le moment.</p>'}</div>`;
+  tg();
+}
+function tg(){const m=$("lm").value;$("lp").style.display=m==="swap"?"none":"";$("lw").style.display=m==="swap"?"":"none";$("ld").style.display=m==="auction"?"":"none"}
+$("mkw").addEventListener("click",e=>{const t=e.target;if(t.id==="lgo")listIt();else if(t.dataset.b)act(t.dataset.b);else if(t.dataset.u)unlist(t.dataset.u)});
+$("mkw").addEventListener("change",e=>{if(e.target.id==="lm")tg()});
+function rFt(){
+  const ids=CARDS.map((_,i)=>i).filter(i=>S.own[i]);
+  const sel=k=>`<select data-t="${k}" aria-label="Carte ${k+1}">${ids.map(i=>`<option value="${i}"${i===(ids.includes(S.team[k])?S.team[k]:ids[k])?" selected":""}>${esc(CARDS[i][0])} (${pw(i)})</option>`).join("")}</select>`;
+  $("ftw").innerHTML=`<div class="panel"><b>Ton équipe</b> <span class="mute">3 cartes différentes, jouées dans l’ordre. Elle défend aussi contre les autres joueurs.</span><p class="btns">${sel(0)}${sel(1)}${sel(2)}</p><p class="btns"><button class="act" id="f1">Défier un joueur</button><button class="act" id="f2">Défier la brume (PNJ)</button></p><p>${S.pts} pts · ${S.w} victoires · ${S.l} défaites</p><div id="flog">${FL}</div></div>`;
+}
+function fight(pvp){
+  const wait=15000-(Date.now()-S.lf);if(wait>0)return msg("Reprends ton souffle ("+Math.ceil(wait/1000)+" s).");
+  const t=[...document.querySelectorAll("[data-t]")].map(s=>+s.value);
+  if(t.length<3||new Set(t).size<3)return msg("Il te faut 3 cartes différentes.");
+  let opp,on;
+  if(pvp){
+    const c=PL.filter(p=>p.id!==uid&&p.team&&p.team.length===3);
+    if(!c.length)return msg("Aucun joueur n’a encore d’équipe. Essaie le PNJ.");
+    const p=c[Math.floor(Math.random()*c.length)];opp=p.team;on=p.name||"Voyageur";
+  }else{opp=[pick(),pick(),pick()];on="la brume grise"}
+  S.team=t;S.lf=Date.now();let wa=0,out=[];
+  for(let k=0;k<3;k++){
+    const x=pw(t[k])+Math.random()*30,y=pw(opp[k])+Math.random()*30,w=x>=y;wa+=w;
+    out.push(`Manche ${k+1} : ${esc(CARDS[t[k]][0])} (${Math.round(x)}) ${w?"bat":"perd contre"} ${esc(CARDS[opp[k]][0])} (${Math.round(y)})`);
+  }
+  const win=wa>=2,gp=pvp?20:8,gg=pvp?8:3,lp=pvp?10:4;
+  if(win){S.w++;S.pts+=gp;S.gold+=gg}else{S.l++;S.pts=Math.max(0,S.pts-lp)}
+  FL=`<p><b>${win?"Victoire":"Défaite"} contre ${esc(on)}</b></p>`+out.map(o=>`<div class="lot" style="--rc:#5a4a2a">${o}</div>`).join("")+`<p class="mute">${win?`+${gp} pts, +${gg} £`:`−${lp} pts`}</p>`;
+  save();rFt();
+}
+$("ftw").addEventListener("click",e=>{if(e.target.id==="f1")fight(true);else if(e.target.id==="f2")fight(false)});
+const pc=()=>{let i;do{i=pick()}while(CARDS[i][4]==="l");return i};
+function mk(ids,loc,bo,lm){
+ const L=LB[loc]||["",0],aura=ids.some(i=>st(i,lm).ab==="aura"),f=k=>1+((L[0]===k||L[0]==="all")?L[1]/100:0);
+ return ids.map(i=>{const s=st(i,lm);return{n:CARDS[i][0],k:CARDS[i][4],ab:s.ab,a:s.a*f("atk")*(aura?1.1:1)*bo,d:s.d*f("def")*(s.ab==="fort"?1.25:1)*bo,mx:s.p*f("hp")*bo,hp:s.p*f("hp")*bo,sh:s.ab==="shield"}})}
+function duel(A,B){
+ let t=0;
+ while(A.hp>0&&B.hp>0&&t<40){t++;
+  for(const [x,y] of [[A,B],[B,A]]){
+   if(x.hp<=0||y.hp<=0)break;
+   const at=x.a*(x.ab==="rage"&&x.hp<x.mx/2?1.4:1)*(AF[x.k]===y.k?1.15:1)*(.85+Math.random()*.3);
+   let dm=Math.max(at*.15,at-y.d*(x.ab==="pierce"?.4:1)*.5);
+   if(Math.random()<.08+(y.ab==="dodge"?.22:0))continue;
+   if(y.sh){y.sh=false;continue}
+   if(Math.random()<.1+(x.ab==="crit"?.2:0))dm*=1.8;
+   dm=Math.round(dm);y.hp-=dm;
+   if(x.ab==="drain")x.hp=Math.min(x.mx,x.hp+dm*.3);
+   if(y.ab==="thorns")x.hp-=Math.round(dm*.25);
+  }
+  [A,B].forEach(u=>{if(u.ab==="regen"&&u.hp>0)u.hp=Math.min(u.mx,u.hp+u.mx*.07)});
+ }
+ if(A.hp>0&&B.hp>0)(A.hp/A.mx<B.hp/B.mx?A:B).hp=0;
+}
+function rFt(){
+ const all=CARDS.map((_,i)=>i),ids=all.filter(i=>S.own[i]&&CARDS[i][4]!=="l"),ls=all.filter(i=>S.own[i]&&CARDS[i][4]==="l");
+ const sel=k=>`<select data-t="${k}" aria-label="Carte ${k+1}">${ids.map(i=>`<option value="${i}"${i===(ids.includes(S.team[k])?S.team[k]:ids[k])?" selected":""}>${esc(CARDS[i][0])} (${pwr(i)})</option>`).join("")}</select>`;
+ $("ftw").innerHTML=`<div class="panel"><b>Ton équipe</b> <span class="mute">3 combattants dans l’ordre : chacun se bat jusqu’à sa chute. Elle défend aussi contre les autres joueurs.</span><p class="btns">${sel(0)}${sel(1)}${sel(2)}<select data-l aria-label="Lieu"><option value="-1">Aucun lieu</option>${ls.map(i=>`<option value="${i}"${S.loc===i?" selected":""}>${esc(CARDS[i][0])} · ${LBT[i]}</option>`).join("")}</select></p><p class="mute">Avantages (+15 % ATQ) : Voie du Fou › Divinités › Personnages › Voie du Fou</p><p class="btns"><button class="act" id="f1">Défier un joueur</button><button class="act" id="f2">Défier la brume (PNJ)</button></p><p><b>${tit(S.pts)}</b> · ${S.pts} pts · ${S.w} V · ${S.l} D · série ${S.ws||0}</p><div id="flog">${FL}</div></div>`;
+}
+function fight(pvp){
+ const wait=10000-(Date.now()-S.lf);if(wait>0)return msg("Reprends ton souffle ("+Math.ceil(wait/1000)+" s).");
+ const t=[...document.querySelectorAll("[data-t]")].map(s=>+s.value),lo=+((document.querySelector("[data-l]")||{value:-1}).value);
+ if(t.length<3||new Set(t).size<3||t.some(x=>isNaN(x)))return msg("Il te faut 3 cartes différentes.");
+ let opp,on,ol=-1,olv,bo=1;
+ if(pvp){
+  const c=PL.filter(p=>p.id!==uid&&p.team&&p.team.length===3);
+  if(!c.length)return msg("Aucun joueur n’a encore d’équipe. Essaie le PNJ.");
+  const p=c[Math.floor(Math.random()*c.length)];opp=p.team.map(i=>CARDS[i][4]==="l"?pc():i);on=p.name||"Voyageur";ol=p.loc??-1;olv=p.lv;
+ }else{opp=[pc(),pc(),pc()];on="la brume grise";bo=1+Math.min(.5,S.pts/1500)}
+ S.team=t;S.loc=lo;S.lf=Date.now();
+ const A=mk(t,lo,1),B=mk(opp,ol,bo,olv),out=[];let a=0,b=0;
+ while(a<3&&b<3){const x=A[a],y=B[b],hx=Math.round(x.hp),hy=Math.round(y.hp);duel(x,y);const w=x.hp>0;
+  out.push(`${esc(x.n)} (${hx} PV) ${w?"terrasse":"tombe face à"} ${esc(y.n)} (${hy} PV) · reste ${Math.max(0,Math.round(w?x.hp:y.hp))} PV`);w?b++:a++}
+ const win=a<3,perf=win&&a===0;
+ let gp=pvp?20:8,gg=pvp?8:3,lp=pvp?10:4,tx;
+ if(win){S.ws=(S.ws||0)+1;gp=Math.round(gp*(perf?1.5:1));gg+=Math.min(S.ws-1,5)*2;S.w++;S.pts+=gp;S.gold+=gg;tx=`+${gp} pts, +${gg} £${perf?" · victoire parfaite !":""}${S.ws>1?" · série de "+S.ws:""}`}
+ else{S.ws=0;S.l++;S.pts=Math.max(0,S.pts-lp);tx=`−${lp} pts`}
+ FL=`<p><b>${win?"Victoire":"Défaite"} contre ${esc(on)}</b></p>`+out.map(o=>`<div class="lot" style="--rc:#5a4a2a">${o}</div>`).join("")+`<p class="mute">${tx}</p>`;
+ save();rFt();
+}
+const PCD=300000,MAXP=10;
+function refill(){const n=Date.now();if(S.st===undefined){S.st=3;S.lt=n}if(S.st>=MAXP){S.lt=n;return}const k=Math.floor((n-S.lt)/PCD);if(k>0){S.st=Math.min(MAXP,S.st+k);S.lt=S.st>=MAXP?n:S.lt+k*PCD}}
+const pkr=k=>{const p=[];CARDS.forEach((c,i)=>{if(c[3]===k)p.push(i)});return p[Math.floor(Math.random()*p.length)]};
+let fxB=false,fxOff=false;
+function fx(r,f){if(r!=='l'&&r!=='m')return;if(!f&&(fxOff||fxB))return;fxB=true;const d=document.createElement('div');d.className='fx '+r;d.innerHTML=`<i></i><span>${r==='m'?'Séquence 0':'Légendaire'}</span>`;document.body.appendChild(d);setTimeout(()=>{d.remove();fxB=false},r==='m'?2300:1700)}
+function openN(n,pay){refill();if(!pay){if(S.st<n)return msg('Pas assez de boosters.');S.st-=n}const ids=[];let mo=0;for(let j=0;j<n;j++){let a=draw3();const r=Math.random(),m=r<.0025?2:r<.0225?1:0;if(m===2){a=[pkr('m'),pkr('l'),a[2]];S.pity=0}else if(m===1){a[0]=pkr(Math.random()<.9?'l':'m');S.pity=0}mo=Math.max(mo,m);ids.push(...a)}ev('draw',n);renderPack(ids);$('pack').className='row'+(n>1?' multi':'')+(mo?' moon'+mo:'');if(mo)$('hint').innerHTML=mo===2?'<b class="bm">Lune de Sang</b> · un arcane de Séquence 0 s’est glissé dans le paquet…':'<b class="bf">Pleine Lune</b> · une carte légendaire au moins est garantie.';tick()}
+function tick(){refill();const n=S.st;$('open').disabled=n<1;$('o5').disabled=n<5;$('o10').disabled=n<10;const w=n>=MAXP?0:S.lt+PCD-Date.now(),s=Math.ceil(w/1000);$('stk').innerHTML=`Boosters : <b>${n}/${MAXP}</b>`+(w>0?` · prochain dans ${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`:' · réserve pleine');$('buy').disabled=S.gold<15}
+const wkN=()=>Math.floor((dayN()+3)/7);
+function mz(){const d=dayN(),w=wkN();if(!S.dm||S.dm.d!==d)S.dm={d,c:0,draw:0,fight:0,win:0,up:0};if(!S.wm||S.wm.w!==w)S.wm={w,c:0,draw:0,fight:0,win:0,up:0}}
+function ev(k,n){mz();n=n===undefined?1:n;S.dm[k]+=n;S.wm[k]+=n}
+const DM=[['draw',3,'Ouvrir 3 boosters',15],['fight',3,'Livrer 3 combats',10],['win',2,'Gagner 2 combats',20],['up',1,'Améliorer 1 carte',15]];
+const WM=[['draw',25,'Ouvrir 25 boosters',80],['fight',15,'Livrer 15 combats',60],['win',10,'Gagner 10 combats',100],['up',5,'Améliorer 5 cartes',80]];
+const catAll=k=>CARDS.every((c,i)=>c[4]!==k||S.own[i]);
+const CM=[['Posséder 10 cartes différentes',()=>cnt()>=10,{a:1}],['Posséder 20 cartes différentes',()=>cnt()>=20,{d:1}],['Posséder 30 cartes différentes',()=>cnt()>=30,{p:2}],['Compléter la Voie du Fou',()=>catAll('k'),{a:2}],['Réunir toutes les Divinités',()=>catAll('d'),{d:2}],['Visiter tous les Lieux',()=>catAll('l'),{p:3}],['Obtenir le Fou et le Créateur Originel',()=>S.own[9]&&S.own[29],{a:3}],['Collection complète',()=>cnt()>=34,{a:3,d:3,p:3}]];
+const SYN=[['Famille Moretti',[0,10,11],2,{p:12},'Klein Voyant, Benson, Melissa'],['Gardiens de Nuit',[12,13,14,15],2,{d:12},'Dunn, Old Neil, Daly, Leonard'],['Membres du Club',[16,17,18,19,20],2,{a:10},'Fors, Emlyn, Derrick, Audrey, Alger'],['Voie du Fou',[0,1,2,3,4,5,6,7,8,9],2,{a:6},'Deux cartes Klein ou plus'],['Les Anciens',[23,24,25],2,{a:8,d:8},'Amon, Monsieur la Porte, Adam'],['Panthéon',[26,27,28,29],2,{p:10,a:5},'Les quatre Divinités'],['Âme du Voyageur',[0,21],2,{a:10,d:5},'Klein Voyant + Zhou Mingrui']];
+const TX={a:'ATQ',d:'DEF',p:'PV'},fmt=o=>Object.keys(o).filter(k=>o[k]).map(k=>`+${o[k]} % ${TX[k]}`).join(' ');
+function syn(ids){const o={a:0,d:0,p:0},act=[];SYN.forEach(([nm,g,m,e])=>{const n=ids.filter(i=>g.includes(i)).length;if(n>=m){act.push(nm);for(const k in e)o[k]+=e[k]*(n-m+1)}});return{o,act}}
+function synp(){const t=[...document.querySelectorAll('[data-t]')].map(s=>+s.value),r=syn(t),e=$('syp');if(e)e.innerHTML=r.act.length?'Synergies actives : '+r.act.map(x=>`<b>${x}</b>`).join(', ')+' ('+fmt(r.o)+')':'Aucune synergie active. Associe des cartes du même groupe (voir l’Index).'}
+function rIx(){mz();const bar=(v,m)=>`<div class='bar' style='flex:1 1 90px'><i style='width:${Math.min(100,v/m*100)}%'></i></div>`;const col=(got,ok)=>got?'#5a4a2a':ok?'#e8c06a':'#a4a49c';const mis=(t,L,o)=>L.map(([k,m,tx,g],j)=>{const v=Math.min(o[k],m),got=o.c>>j&1,ok=v>=m,rw=`+${g} £${t==='w'?' · +1 booster':''}`;return `<div class='lot' style='--rc:${col(got,ok)}'><span>${tx}</span>${bar(v,m)}<span class='mute'>${v}/${m}</span>${got?'<i>✓ récupérée</i>':ok?`<button data-c='${t}${j}'>${rw}</button>`:`<i>${rw}</i>`}</div>`}).join('');const cm=CM.map(([n,f,o],j)=>{const got=(S.cm||0)>>j&1,ok=f();return `<div class='lot' style='--rc:${col(got,ok)}'><span>${n}</span><span class='mute'>${fmt(o)}</span>${got?'<i>✓ actif</i>':ok?`<button data-c='m${j}'>Récupérer</button>`:'<i>à accomplir</i>'}</div>`}).join('');const bn=S.bn||{a:0,d:0,p:0};$('ixw').innerHTML=`<div class='panel'><b>Missions du jour</b>${mis('d',DM,S.dm)}</div><div class='panel'><b>Missions de la semaine</b>${mis('w',WM,S.wm)}</div><div class='panel'><b>Missions de collection</b> <span class='mute'>Bonus permanents : ATQ +${bn.a} % · DEF +${bn.d} % · PV +${bn.p} %</span>${cm}</div><div class='panel'><b>Synergies</b> <span class='mute'>Place ces cartes ensemble dans ton équipe. Chaque carte du groupe au-delà du minimum ajoute à nouveau le bonus.</span>${SYN.map(([n,g,m,o,d])=>`<div class='lot' style='--rc:#5a4a2a'><span><b>${n}</b> <i>${d}</i></span><span class='mute'>${m}+ cartes : ${fmt(o)}</span></div>`).join('')}</div>`}
+function claim(c){mz();const t=c[0],j=+c.slice(1);if(t==='m'){const m=CM[j];if(!m[1]()||((S.cm||0)>>j&1))return;S.cm=(S.cm||0)|(1<<j);S.bn=S.bn||{a:0,d:0,p:0};for(const k in m[2])S.bn[k]=(S.bn[k]||0)+m[2][k];msg('Bonus permanent obtenu !')}else{const o=t==='d'?S.dm:S.wm,m=(t==='d'?DM:WM)[j];if(o[m[0]]<m[1]||(o.c>>j&1))return;o.c|=1<<j;S.gold+=m[3];if(t==='w')S.st=(S.st||0)+1;msg('Récompense : +'+m[3]+' £')}save();rIx();tick()}
+function mk(ids,loc,bo,lm,bn){const L=LB[loc]||['',0],f=k=>1+((L[0]===k||L[0]==='all')?L[1]/100:0),au=ids.some(i=>st(i,lm).ab==='aura'),y=syn(ids).o,B=bn||{a:0,d:0,p:0},g=k=>1+((y[k]||0)+(B[k]||0))/100;return ids.map(i=>{const s=st(i,lm),m=Math.round(s.p*f('hp')*g('p')*bo);return{i,n:CARDS[i][0],k:CARDS[i][4],ab:s.ab,a:s.a*f('atk')*(au?1.1:1)*g('a')*bo,d:s.d*f('def')*(s.ab==='fort'?1.25:1)*g('d')*bo,mx:m,hp:m,sh:s.ab==='shield'}})}
+function sim(A,B,E){const U=[A,B];let t=0;while(A.hp>0&&B.hp>0&&t<40){t++;for(const s of [0,1]){const x=U[s],y=U[1-s];if(x.hp<=0||y.hp<=0)break;const at=x.a*(x.ab==='rage'&&x.hp<x.mx/2?1.4:1)*(AF[x.k]===y.k?1.15:1)*(.85+Math.random()*.3);let dm=Math.max(at*.15,at-y.d*(x.ab==='pierce'?.4:1)*.5);if(Math.random()<.08+(y.ab==='dodge'?.22:0)){E.push({k:'miss',s,w:'Esquive'});continue}if(y.sh){y.sh=false;E.push({k:'miss',s,w:'Bloqué'});continue}const cr=Math.random()<.1+(x.ab==='crit'?.2:0);if(cr)dm*=1.8;dm=Math.round(dm);y.hp=Math.max(0,y.hp-dm);E.push({k:'hit',s,dm,cr,hp:Math.round(y.hp)});if(x.ab==='drain'){const h=Math.round(dm*.3);x.hp=Math.min(x.mx,x.hp+h);E.push({k:'heal',s,v:h,hp:Math.round(x.hp)})}if(y.ab==='thorns'){const r=Math.round(dm*.25);x.hp=Math.max(0,x.hp-r);E.push({k:'dot',s,dm:r,hp:Math.round(x.hp)})}}U.forEach((u,s)=>{if(u.ab==='regen'&&u.hp>0&&u.hp<u.mx){const h=Math.round(u.mx*.07);u.hp=Math.min(u.mx,u.hp+h);E.push({k:'heal',s,v:h,hp:Math.round(u.hp)})}})}if(A.hp>0&&B.hp>0)(A.hp/A.mx<B.hp/B.mx?A:B).hp=0;return A.hp>0}
+let SKP=false,fighting=false;const sl=ms=>new Promise(r=>setTimeout(r,SKP?0:ms)),SH=[{transform:'translateX(0)'},{transform:'translateX(-9px)',filter:'brightness(2.2)'},{transform:'translateX(9px)'},{transform:'translateX(0)'}];
+async function play(A,B,E){SKP=false;const f=s=>$('f'+s),mx=[1,1],dd=[0,0],T=[A,B];const pips=()=>[0,1].forEach(s=>{$('t'+s).innerHTML=T[s].map((u,j)=>`<span class='pp${j<dd[s]?' dead':j===dd[s]?' on':''}'>${esc(u.n)}</span>`).join('')});const hp=(s,h)=>{$('h'+s).style.width=Math.max(0,h/mx[s]*100)+'%';$('v'+s).textContent=Math.max(0,h)+' / '+mx[s]};const fl=(s,tx,c)=>{const d=document.createElement('div');d.className='fl '+c;d.textContent=tx;f(s).appendChild(d);setTimeout(()=>d.remove(),900)};const an=(s,k,o)=>{const c=f(s).firstChild;if(c&&c.animate)c.animate(k,o)};pips();for(const e of E){const s=e.s;if(e.k==='in'){mx[s]=e.mx;const c=el(e.i,{up:true});c.classList.add('fcard');f(s).innerHTML='';f(s).appendChild(c);hp(s,e.h);pips();await sl(700)}else if(e.k==='hit'||e.k==='miss'){an(s,[{transform:'translateX(0)'},{transform:`translateX(${s?-60:60}px) scale(1.08)`},{transform:'translateX(0)'}],{duration:360,easing:'ease-out'});await sl(200);if(e.k==='miss')fl(1-s,e.w,'ms');else{an(1-s,SH,{duration:300});fl(1-s,(e.cr?'CRIT ':'')+'-'+e.dm,e.cr?'cr':'ht');hp(1-s,e.hp)}await sl(e.cr?650:480)}else if(e.k==='heal'){fl(s,'+'+e.v,'hl');hp(s,e.hp);await sl(300)}else if(e.k==='dot'){an(s,SH,{duration:300});fl(s,'-'+e.dm,'ht');hp(s,e.hp);await sl(380)}else if(e.k==='ko'){const c=f(s).firstChild;if(c){c.style.filter='grayscale(1) brightness(.5)';c.animate([{opacity:1},{opacity:.12,transform:'translateY(26px) scale(.9)'}],{duration:600,fill:'forwards'})}dd[s]++;pips();await sl(750)}}}
+function rFt(){if(fighting)return;const all=CARDS.map((_,i)=>i),ids=all.filter(i=>S.own[i]&&CARDS[i][4]!=='l'),ls=all.filter(i=>S.own[i]&&CARDS[i][4]==='l');const sel=k=>`<select data-t='${k}' aria-label='Carte ${k+1}'>${ids.map(i=>`<option value='${i}'${i===(ids.includes(S.team[k])?S.team[k]:ids[k])?' selected':''}>${esc(CARDS[i][0])} (${pwr(i)})</option>`).join('')}</select>`;$('ftw').innerHTML=`<div class='panel'><b>Ton équipe</b> <span class='mute'>3 combattants dans l’ordre : chacun se bat jusqu’à sa chute. Elle défend aussi contre les autres joueurs.</span><p class='btns'>${sel(0)}${sel(1)}${sel(2)}<select data-l aria-label='Lieu'><option value='-1'>Aucun lieu</option>${ls.map(i=>`<option value='${i}'${S.loc===i?' selected':''}>${esc(CARDS[i][0])} · ${LBT[i]}</option>`).join('')}</select></p><p id='syp' class='mute'></p><p class='mute'>Avantages (+15 % ATQ) : Voie du Fou › Divinités › Personnages › Voie du Fou</p><p class='btns'><button class='act' id='f1'>Défier un joueur</button><button class='act' id='f2'>Défier la brume (PNJ)</button></p><div id='stage'></div><p><b>${tit(S.pts)}</b> · ${S.pts} pts · ${S.w} V · ${S.l} D · série ${S.ws||0}</p><div id='flog'>${FL}</div></div>`;synp()}
+async function fight(pvp){if(fighting)return;const wait=10000-(Date.now()-S.lf);if(wait>0)return msg('Reprends ton souffle ('+Math.ceil(wait/1000)+' s).');const t=[...document.querySelectorAll('[data-t]')].map(s=>+s.value),lo=+((document.querySelector('[data-l]')||{value:-1}).value);if(t.length<3||new Set(t).size<3||t.some(x=>isNaN(x)))return msg('Il te faut 3 cartes différentes.');let opp,on,ol=-1,olv,obn,bo=1;if(pvp){const c=PL.filter(p=>p.id!==uid&&p.team&&p.team.length===3);if(!c.length)return msg('Aucun joueur n’a encore d’équipe. Essaie le PNJ.');const p=c[Math.floor(Math.random()*c.length)];opp=p.team.map(i=>CARDS[i][4]==='l'?pc():i);on=p.name||'Voyageur';ol=p.loc===undefined?-1:p.loc;olv=p.lv;obn=p.bn}else{opp=[pc(),pc(),pc()];on='la brume grise';bo=1+Math.min(.5,S.pts/1500)}S.team=t;S.loc=lo;S.lf=Date.now();const A=mk(t,lo,1,null,S.bn),B=mk(opp,ol,bo,olv,obn),E=[],lg=[];let a=0,b=0;while(a<3&&b<3){const x=A[a],y=B[b],hx=Math.round(x.hp),hy=Math.round(y.hp);E.push({k:'in',s:0,i:x.i,h:hx,mx:x.mx},{k:'in',s:1,i:y.i,h:hy,mx:y.mx});const w=sim(x,y,E);E.push({k:'ko',s:w?1:0});lg.push(`${esc(x.n)} (${hx} PV) ${w?'terrasse':'tombe face à'} ${esc(y.n)} (${hy} PV) · reste ${Math.round(w?x.hp:y.hp)} PV`);w?b++:a++}const win=a<3,perf=win&&a===0;let gp=pvp?20:8,gg=pvp?8:3,lp=pvp?10:4,tx;ev('fight');if(win){ev('win');S.ws=(S.ws||0)+1;gp=Math.round(gp*(perf?1.5:1));gg+=Math.min(S.ws-1,5)*2;S.w++;S.pts+=gp;S.gold+=gg;tx=`+${gp} pts, +${gg} £${perf?' · victoire parfaite !':''}${S.ws>1?' · série de '+S.ws:''}`}else{S.ws=0;S.l++;S.pts=Math.max(0,S.pts-lp);tx=`−${lp} pts`}FL=`<p><b>${win?'Victoire':'Défaite'} contre ${esc(on)}</b></p>`+lg.map(o=>`<div class='lot' style='--rc:#5a4a2a'>${o}</div>`).join('')+`<p class='mute'>${tx}</p>`;fighting=true;$('stage').innerHTML=`<div class='arena'><div class='side'><div class='tm' id='t0'></div><div class='fc' id='f0'></div><div class='hb'><i id='h0'></i></div><div class='hv' id='v0'></div></div><div class='vs'>VS</div><div class='side'><div class='tm' id='t1'></div><div class='fc' id='f1'></div><div class='hb'><i id='h1'></i></div><div class='hv' id='v1'></div></div></div><p class='btns'><button class='act' id='skip'>Passer</button></p>`;$('skip').onclick=()=>{SKP=true};$('stage').scrollIntoView({behavior:'smooth',block:'center'});save();await play(A,B,E);SKP=false;$('stage').insertAdjacentHTML('beforeend',`<div class='fres ${win?'w':'l'}'>${win?'VICTOIRE':'DÉFAITE'}</div>`);await sl(1600);fighting=false;rFt()}
+function rRk(){
+  const L=db?PL.slice():[{id:"me",name:nm(),pts:S.pts,w:S.w,l:S.l,n:cnt()}];
+  const tab=(t,arr,f)=>`<div class="panel"><b>${t}</b>${arr.slice(0,20).map((p,k)=>`<div class="lot" style="--rc:${p.id===uid||p.id==="me"?"#e8c06a":"#5a4a2a"}"><span>${k+1}. ${esc(p.name||"Voyageur")}</span><span>${f(p)}</span></div>`).join("")}</div>`;
+  $("rkw").innerHTML=tab("Combat",L.slice().sort((a,b)=>(b.pts||0)-(a.pts||0)),p=>`${tit(p.pts||0)} · ${p.pts||0} pts · ${p.w||0} V / ${p.l||0} D`)+tab("Collection",L.slice().sort((a,b)=>(b.n||0)-(a.n||0)),p=>`${p.n||0} / ${CARDS.length}`);
+}
+const TABS={draw:"tDraw",col:"tCol",mk:"tMk",ft:"tFt",rk:"tRk",ix:"tIx"};
+function show(v){curTab=v;for(const k in TABS){$(k).classList.toggle("hide",k!==v);$(TABS[k]).setAttribute("aria-pressed",k===v)}refresh(true)}
+function refresh(force){
+  if(!force&&(curTab==="mk"||curTab==="ft")&&$(curTab+"w").contains(document.activeElement))return;
+  const f={col:renderCol,mk:rMk,ft:rFt,rk:rRk,ix:rIx}[curTab];if(f)f();
+}
+for(const k in TABS)$(TABS[k]).onclick=()=>show(k);
+setInterval(()=>{if(db){settle();refresh()}},15000);
+$("pseudo").onchange=()=>{S.name=$("pseudo").value.trim().slice(0,20);save();refresh(true)};
+const BK="grimoire-fond";
+function applyBg(){let u=null;try{u=localStorage.getItem(BK)}catch(e){}$("fan").style.backgroundImage=u?`url(${u})`:"";$("bgb").textContent=u?"Retirer mon fond":"Mon fond"}
+$("bgb").onclick=()=>{let u=null;try{u=localStorage.getItem(BK)}catch(e){}if(u){try{localStorage.removeItem(BK)}catch(e){}applyBg()}else $("bgf").click()};
+$("bgf").onchange=e=>{
+  const f=e.target.files[0];if(!f)return;const im=new Image();
+  im.onload=()=>{const c=document.createElement("canvas"),s=Math.min(1,1400/im.width);c.width=im.width*s;c.height=im.height*s;c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+    try{localStorage.setItem(BK,c.toDataURL("image/jpeg",.7))}catch(x){msg("Image trop lourde pour être gardée.")}applyBg();e.target.value=""};
+  im.src=URL.createObjectURL(f);
+};
+applyBg();
+document.addEventListener("pointermove",e=>{const c=e.target.closest&&e.target.closest(".card.up");if(!c||c.closest("dialog"))return;const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;c.style.setProperty("--mx",x*100+"%");c.style.setProperty("--my",y*100+"%");c.style.setProperty("--rx",((.5-y)*16)+"deg");c.style.setProperty("--ry",((x-.5)*16)+"deg")});
+document.addEventListener("pointerout",e=>{const c=e.target.closest&&e.target.closest(".card");if(c){c.style.removeProperty("--rx");c.style.removeProperty("--ry")}});
+$("dbtn").onclick=()=>{const td=dayN();if(S.dd===td)return;S.ds=S.dd===td-1?(S.ds||0)+1:1;S.dd=td;const g=10+Math.min(S.ds,7)*5+(S.ds%7===0?30:0);S.gold+=g;save();msg(`Offrande du jour : +${g} £`)};
+$("dlv").onclick=()=>{const s=st(cur),l=LV(cur);if(!s||l>=5||S.own[cur]-1<l)return;S.own[cur]-=l;S.lv=S.lv||{};S.lv[cur]=l+1;ev('up');save();openDlg(cur);renderCol()};
+$('open').onclick=()=>openN(1);$('o5').onclick=()=>openN(5);$('o10').onclick=()=>openN(10);$('buy').onclick=()=>{if(S.gold<15)return;S.gold-=15;openN(1,1)};
+$('all').onclick=()=>{const cs=[...document.querySelectorAll('#pack .card:not(.up)')],rs=cs.map(c=>c.dataset.r),b=rs.includes('m')?'m':rs.includes('l')?'l':'';fxOff=true;if(b)fx(b,1);cs.forEach((c,j)=>setTimeout(()=>{c.click();if(j===cs.length-1)setTimeout(()=>{fxOff=false},200)},j*140+(b?600:0)))};
+$('ixw').addEventListener('click',e=>{const c=e.target.dataset&&e.target.dataset.c;if(c)claim(c)});
+$('ftw').addEventListener('change',e=>{if(e.target.dataset.t!==undefined)synp()});
+save();setInterval(tick,500);tick();
+</script>
+</body>
+</html>
